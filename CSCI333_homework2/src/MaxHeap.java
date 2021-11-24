@@ -1,13 +1,14 @@
+import java.util.Arrays;
 
 public class MaxHeap {
 
 	private int[] heap;
-	private int heapSize;
+	private int heapSize = 0;
 	
 	MaxHeap(int[] arr){
-		this.heap = arr;
-		this.heapSize = arr.length;
-		BuildMaxHeap;
+		this.heap = Arrays.copyOfRange(arr, 0, arr.length);
+		this.heapSize = heap.length;
+		buildMaxHeap();
 	}
 	
 	private int leftChildOf(int index) {
@@ -24,7 +25,7 @@ public class MaxHeap {
 	}
 	
 	public void printMaxHeap() {
-		
+		System.out.println("Your heapSize is " + this.heapSize + "\n" + Arrays.toString(this.heap));
 	}
 	
 	private void maxHeapify(int i) {
@@ -44,16 +45,33 @@ public class MaxHeap {
 		}
 		
 		if(largest != i) {
-			swap();
+			swap(heap, i, largest);
 		}
 	}
 	
 	private void buildMaxHeap() {
-		
+		for(int i = this.heapSize/2; i > 1; i--) {
+			maxHeapify(i);
+		}
 	}
 	
 	private void heapsort() {
+		buildMaxHeap();
+		int backupCopy = this.heapSize;
+		for(int i = heapSize; i > 2; i--) {
+			swap(heap, heap[1], heap[i]);
+			this.heapSize--;
+			maxHeapify(1);
+		}
+		this.heapSize = backupCopy;
 		
+	}
+	
+	private void swap(int[] A, int z, int r) {
+		int temp = A[z];
+		A[z] = A[r];
+		A[r] = temp;
+		//return A;
 	}
 	
 	
